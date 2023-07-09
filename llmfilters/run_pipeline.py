@@ -24,9 +24,13 @@ def run_pipeline(pipeline_file):
     else:
         print("No manager specified in the pipeline.yaml.")
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(description='LLM Filters Pipeline')
     parser.add_argument('--pipeline-file', type=str, help='Path to the pipeline.yaml file')
     args = parser.parse_args()
 
     run_pipeline(args.pipeline_file)
+
+
+if __name__ == '__main__':
+    main()

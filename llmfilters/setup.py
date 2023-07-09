@@ -15,7 +15,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'llmfilters-run-pipeline = llmfilters.run_pipeline:main',
+            'llmfilters-pipeline = llmfilters.run_pipeline:main',
         ],
     },
 )
