@@ -9,7 +9,7 @@ class SentimentAnalysisFilterBlock(FilterBlock):
         else:
             self.sentiment_analyzer = pipeline("sentiment-analysis")
 
-    async def apply_changes(self, message):
+    def apply_changes(self, message):
         results = self.sentiment_analyzer(message.text)
         sentiment = results[0]["label"]
         message.metadata['sentiment'] = sentiment

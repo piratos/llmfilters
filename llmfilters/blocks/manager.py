@@ -30,7 +30,7 @@ class BlockManager:
         except (ImportError, AttributeError) as e:
             raise ValueError(f"Failed to create block {block_type}: {str(e)}")
 
-    async def process_input(self, input_text):
+    def process_input(self, input_text):
         new_message = Message(input_text)
-        output_message = await self.blocks[0].process_input(new_message)
+        output_message = self.blocks[0].process_input(new_message)
         return output_message.text

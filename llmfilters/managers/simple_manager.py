@@ -13,14 +13,14 @@ class SimpleManager(BaseManager):
     def load_pipeline(self):
         self.block_manager = BlockManager(self.config_file)
 
-    async def run_pipeline(self, input_text):
-        return await self.block_manager.process_input(input_text)
+    def run_pipeline(self, input_text):
+        return self.block_manager.process_input(input_text)
 
-    async def process_input(self, input_text):
-        output = await self.run_pipeline(input_text)
+    def process_input(self, input_text):
+        output = self.run_pipeline(input_text)
         return output
 
-    async def run(self):
+    def run(self):
         self.load_pipeline()
 
         while True:
@@ -28,5 +28,5 @@ class SimpleManager(BaseManager):
             if input_text == "exit":
                 break
 
-            output = await self.process_input(input_text)
+            output = self.process_input(input_text)
             print("Output:", output)

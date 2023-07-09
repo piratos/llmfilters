@@ -17,6 +17,7 @@ try:
     from llmfilters.managers.kafka import KafkaManager
     __all__.append('KafkaManager')
 except ImportError:
+    raise
     pass
 
 

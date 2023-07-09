@@ -5,7 +5,7 @@ class ProfanityFilterBlock(FilterBlock):
         super().__init__(params, next_block=next_block)
         self.profanity_words = params.get('profanity_words', [])
 
-    async def apply_changes(self, message):
+    def apply_changes(self, message):
         for word in self.profanity_words:
             message.text = message.text.replace(word, '[FILTERED]')
         if '[FILTERED]' in message.text:

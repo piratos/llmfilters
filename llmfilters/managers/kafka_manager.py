@@ -1,16 +1,15 @@
 from kafka import KafkaConsumer, KafkaProducer
 import json
-import asyncio
 import uuid
 
-from llmfilters.blocks.manager import BlockManager
 from llmfilters.managers.base import BaseManager
 
 class KafkaManager(BaseManager):
     type = 'kafka'
 
-    def __init__(self, config):
+    def __init__(self, config, config_file):
         self.config = config
+        self.config_file = config_file
         self.consumer = None
         self.producer = None
         self.block_manager = None
@@ -27,14 +26,14 @@ class KafkaManager(BaseManager):
             value_serializer=lambda x: json.dumps(x).encode('utf-8')
         )
 
-    async def start_consuming(self):
+    def start_consuming(self):
         for message in self.consumer:
             event = message.value
             input_text = event['text']
             event_id = event['id']
 
             # Call BlockManager for processing
-            output = await self.block_manager.process_input(input_text)
+            output = self.block_manager.process_input(input_text)
 
             # Create a new event with a link to the input event
             result_event = {
@@ -44,19 +43,7 @@ class KafkaManager(BaseManager):
             }
             self.producer.send(self.config['output_topic'], value=result_event)
 
-    async def run(self):
+    def run(self):
+        self.load_pipeline()
         self.connect()
-        await self.start_consuming()
-
-    async def run(self):
-        config = {
-            'bootstrap_servers': self.config.get('bootstrap_servers', 'localhost:9092'),
-            'input_topic': self.config.get('input_topic', 'input_topic'),
-            'output_topic': self.config.get('output_topic', 'output_topic'),
-            'group_id': self.config.get('group_id', 'my-group')
-        }
-
-        manager = KafkaManager(config)
-        block_manager = BlockManager()
-        manager.block_manager = block_manager
-        await manager.run()
+        self.start_consuming()

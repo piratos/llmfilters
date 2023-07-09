@@ -1,12 +1,10 @@
 manager:
-  type: rabbitmq
+  type: kafka
   host: localhost
-  port: 5672
-  virtual_host: '/'
-  username: guest
-  password: guest
-  input_queue: input_queue
-  output_queue: output_queue
+  bootstrap_servers: 127.0.0.1:50001
+  group_id: llmfilters
+  input_topic: input_topic
+  output_topic: output_topic
 
 blocks:
 - type: llmfilters.blocks.EntryFilterBlock
