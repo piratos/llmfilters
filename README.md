@@ -6,21 +6,11 @@ LLM Filters is a project that demonstrates the use of language models (LLMs) to 
 
 The project structure is as follows:
 
-llmfilters/
-|- init.py
-|- blocks/
-| |- init.py
-| |- filter_block.py
-|- managers/
-| |- init.py
-| |- rabbitmq.py
-| |- kafka.py
-|- pipeline.yaml
-
 
 - `llmfilters/` is the main package directory.
 - `blocks/` directory contains the custom filter blocks implemented using LLMs.
 - `managers/` directory contains the managers for integrating with RabbitMQ and Kafka messaging systems.
+- `models` directory contains the objects structure used by the filters, mainly the message format.
 - `pipeline.yaml` is the YAML configuration file that defines the pipeline structure.
 
 ## Blocks
@@ -73,6 +63,10 @@ The pipeline configuration is defined in the `pipeline.yaml` file. It specifies 
 Example `pipeline.yaml` configuration:
 
 ```yaml
+manager:
+  type: simple
+
+blocks:
 - type: llmfilters.blocks.filter_block.FilterBlock
   params:
     param1: value1
@@ -85,8 +79,10 @@ Example `pipeline.yaml` configuration:
 
 In this example, two FilterBlock instances are defined in the pipeline. Each block can have specific parameters based on the requirements.
 
-Feel free to update the README.md file with additional details specific to your project, such as installation instructions, usage examples, and any additional blocks or managers you may have implemented.
-
-Remember to update the directory structure and details based on your specific implementation.
+The manager entry exposes the type and configuration of the manager handling the events
+currently 3 types of managers are implemented:
+- SimpleManager
+- KafkaManager
+- RabbitmqManager
 
 Happy filtering!
