@@ -15,6 +15,17 @@ the building blocks are Filterblocks, the message is passed through a set of fil
 - Adding metadata to the message, which can be used by other filterblocks or can be used to prepare the final prompt going to the user
   or to the LLM.
 
+## Getting Started
+
+1. Install the lib `pip install git+https://github.com/piratos/llmfilters`
+2. Create a pipeline file or use one from the `Examples` folder (see below)
+3. Run the pipeline using the utility `llmfilters-run --pipeline-file path/to/pipeline.yaml`
+
+## Usage
+
+This lib should be imported, augmented with needed blocks then used inside the LLM app/infrastructure rather
+then being executed in standalone way.
+
 ## Project Structure
 
 The project structure is as follows:
@@ -53,20 +64,16 @@ The `KafkaManager` allows processing text data using the LLM pipeline with Kafka
 Simple manager is useful to test the pipeline rather than using it in production
 
 ```
-import asyncio
 from llmfilters.managers import SimpleManager
 
-async def run_manager():
+def run_manager():
+
     config_file = "pipeline.yaml"
-
-    manager = SimpleManager(config_file)
-    block_manager = BlockManager()
-    manager.block_manager = block_manager
-
-    await manager.run()
+    manager = SimpleManager(manager_config, config_file)
+    manager.run()
 
 if __name__ == '__main__':
-    asyncio.run(run_manager())
+    run_manager()
 ```
 
 ## Pipeline Configuration
