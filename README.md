@@ -1,5 +1,7 @@
 # LLM Filters
 
+<img src="https://github.com/piratos/llmfilters/blob/main/llmfilters/assets/logo.png" width="600" height="500">
+
 LLM Filters is a project that demonstrates the use of language models (LLMs) to create a pipeline for processing and filtering text data. It provides a framework for building custom filters using LLMs, and includes managers for integrating with messaging systems such as RabbitMQ and Kafka.
 
 ## Project Structure
