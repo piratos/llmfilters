@@ -2,7 +2,18 @@
 
 <img src="https://github.com/piratos/llmfilters/blob/main/llmfilters/assets/logo.png" width="600" height="500">
 
-LLM Filters is a project that demonstrates the use of language models (LLMs) to create a pipeline for processing and filtering text data. It provides a framework for building custom filters using LLMs, and includes managers for integrating with messaging systems such as RabbitMQ and Kafka.
+LLM Filters is a pipeline library for processing and filtering text data that go in and out from LLM engines. It provides a framework for building custom filters, and includes managers for integrating with messaging systems such as RabbitMQ and Kafka.
+
+When building an LLM based app, you want to control data going into the model, like the length, profanity removal, fact checking etc.
+and you want to control data out, to verify whether the LLM is hallucinating, fact checking etc.
+
+the building blocks are Filterblocks, the message is passed through a set of filterblocks and each one of them has a couple of possible actions:
+
+- Modify the message (like removing profanity)
+- Passing the message to the next block (with or without modifying it)
+- Halting the pipeline and preventing the message to go to the LLM
+- Adding metadata to the message, which can be used by other filterblocks or can be used to prepare the final prompt going to the user
+  or to the LLM.
 
 ## Project Structure
 
@@ -10,7 +21,7 @@ The project structure is as follows:
 
 
 - `llmfilters/` is the main package directory.
-- `blocks/` directory contains the custom filter blocks implemented using LLMs.
+- `blocks/` directory contains the custom filter blocks implemented.
 - `managers/` directory contains the managers for integrating with RabbitMQ and Kafka messaging systems.
 - `models` directory contains the objects structure used by the filters, mainly the message format.
 - `pipeline.yaml` is the YAML configuration file that defines the pipeline structure.
@@ -69,22 +80,19 @@ manager:
   type: simple
 
 blocks:
-- type: llmfilters.blocks.filter_block.FilterBlock
+- type: llmfilters.blocks.FilterBlock1
   params:
     param1: value1
     param2: value2
-- type: llmfilters.blocks.filter_block.FilterBlock
+- type: llmfilters.blocks.FilterBlock2
   params:
     param1: value3
     param2: value4
 ```
 
 In this example, two FilterBlock instances are defined in the pipeline. Each block can have specific parameters based on the requirements.
+See `examples` folder for examples of piplines
 
 The manager entry exposes the type and configuration of the manager handling the events
-currently 3 types of managers are implemented:
-- SimpleManager
-- KafkaManager
-- RabbitmqManager
 
 Happy filtering!
