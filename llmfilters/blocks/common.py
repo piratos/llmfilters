@@ -13,7 +13,7 @@ class ExitFilterBlock(FilterBlock):
         super().__init__(config, next_block)
 
     async def apply_changes(self, messsage):
-        modified_input = super().apply_changes(messsage)
+        modified_input = await super().apply_changes(messsage)
         return modified_input
 
 class LengthFilterBlock(FilterBlock):

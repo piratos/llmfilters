@@ -3,6 +3,9 @@ manager:
 
 blocks:
 - type: llmfilters.blocks.EntryFilterBlock
+- type: llmfilters.blocks.SentimentAnalysisFilterBlock
+  params:
+    model_name: 'distilbert-base-uncased-finetuned-sst-2-english'
 - type: llmfilters.blocks.LengthFilterBlock
   params:
     max_length: 100

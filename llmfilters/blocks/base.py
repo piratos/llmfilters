@@ -18,7 +18,7 @@ class FilterBlock:
         pass
 
     async def process_input(self, message):
-        print(f'{self.__class__.__name__} - Processing')
+        print(f'{self.__class__.__name__} - Processing {message}')
         if await self.refuse_input(message):
             await self.handle_refused_input(message)
         else:
