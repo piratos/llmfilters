@@ -1,0 +1,15 @@
+manager:
+  type: simple
+
+blocks:
+- type: llmfilters.blocks.EntryFilterBlock
+- type: llmfilters.blocks.LengthFilterBlock
+  params:
+    max_length: 100
+- type: llmfilters.blocks.ProfanityFilterBlock
+  params:
+    profanity_words:
+      - bad
+      - rude
+      - offensive
+- type: llmfilters.blocks.ExitFilterBlock
